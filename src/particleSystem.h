@@ -14,7 +14,9 @@ public:
 
 	int m_numParticles;
 	float viscosity;
-	Kernel kernel; 
+	Kernel kernel;
+	Vector3f minPoint;
+	Vector3f maxPoint;
 	
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state);
