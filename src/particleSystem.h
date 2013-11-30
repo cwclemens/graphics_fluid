@@ -17,7 +17,7 @@ public:
 	Kernel kernel; 
 	
 	// for a given state, evaluate derivative f(X,t)
-	virtual vector<Vector3f> evalF(vector<Vector3f> state) = 0;
+	virtual vector<Vector3f> evalF(vector<Vector3f> state);
 	
 	// getter method for the system's state
 	vector<Vector3f> getState(){ return m_vVecState; };
