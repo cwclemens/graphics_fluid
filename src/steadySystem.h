@@ -14,6 +14,10 @@ class SteadySystem: public ParticleSystem {
 	 vector<Vector3f> evalF(vector<Vector3f> state);
 
 	 void draw();
+
+	protected:
+	 vector<FluidParticle> particles;
+	 
 };
 
 #endif
