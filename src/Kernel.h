@@ -13,6 +13,14 @@ class Kernel {
 public:
 	Kernel(ParticleSystem* ps){
 		this->ps = ps;
+		this->h = 1.0f;
+		h2 = h*h;
+		h3 = h2*h;
+		h6 = h3*h3;
+		h9 = h3*h6;
+		ph3 = M_PI*h3;
+		ph6 = M_PI*h6;
+		ph9 = M_PI*h9;
 	};
 
 	Kernel(ParticleSystem* ps, float h) {
