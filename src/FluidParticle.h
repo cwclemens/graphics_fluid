@@ -10,10 +10,10 @@ using namespace std;
 class FluidParticle 
 {
 public:
-	FluidParticle(Vector3f pos, Vector3f vel, float d){
+	FluidParticle(Vector3f pos, Vector3f vel){
 		position = pos;
 		velocity = vel;
-		density = d;
+		density = 0.0f;
 		pressure = 0.0f;
 	};
 
