@@ -34,11 +34,26 @@ public:
 		ph9 = M_PI*h9;
 	};
 
+	vector<FluidParticle> computeNeighbors(int index){
+		FluidParticle p = this->ps->particles[index];
+		vector<FluidParticle> neighbors;
+		for(int i = 0; i < this->ps->particles.size(); i++){
+			if(i != index){
+				FluidParticle j = this->ps->particles[i];
+				if ((p.location - j.location).absSquared() < h2){
+					neighbors.push_back(j);
+				}
+			}
+		}
+
+		return neighbors;
+	};
+
 	float computeMassDensity(int index){
 		float rho = 0.0f;
 		float mass = this->ps->mass;
 		FluidParticle p = this->ps->particles[index];
-		for(int i = 0; i < this->ps->particles.size(); i++){
+		for(int i = 0; i < computeNeighbors(index).size(); i++){
 			if(i != index){
 				rho += mass * defaultWeight(p.location - this->ps->particles[i].location);
 			}
@@ -52,14 +67,12 @@ public:
 		float pi = p.pressure;
 		float rho = p.density;
 		float mass = this->ps->mass;
-		for(int i = 0; i < this->ps->particles.size(); i++){
-			if(i != index){
+		for(int i = 0; i < computeNeighbors(index).size(); i++){
 				FluidParticle j = this->ps->particles[index];
 				float pj = j.pressure;
 				float rho_j = j.density;
 				pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
 					gradPressureWeight(p.location - j.location);
-			}
 		}
 		pressure = - rho * pressure;
 		return pressure;
@@ -71,12 +84,10 @@ public:
 		Vector3f ui = state[2*index + 1];
 		float mass = this->ps->mass;
 		float mu = this->ps->viscosity;
-		for(int i = 0; i < this->ps->particles.size(); i++){
-			if(i != index){
+		for(int i = 0; i < computeNeighbors(i).size(); i++){
 				FluidParticle j = this->ps->particles[i];
 				viscosity = (j.velocity - p.velocity) * (mass / j.density) 
-				* laplaceViscosityWeight(p.location - j.location);
-			}
+					* laplaceViscosityWeight(p.location - j.location);
 		}
 		viscosity = mu * viscosity;
 		return viscosity;
