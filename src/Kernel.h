@@ -15,6 +15,10 @@ public:
 		this->ps = ps;
 	};
 
+	Kernel(ParticleSystem* ps, float h) {
+	
+	};
+
 	
 protected:
 	ParticleSystem* ps;
@@ -70,6 +74,7 @@ protected:
 		return 45*(h-r.abs())/(M_PI*pow(h, 6));
 	}
 
+	float h,
 };
 
 #end
