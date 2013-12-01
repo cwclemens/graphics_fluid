@@ -15,6 +15,7 @@ public:
 	int m_numParticles;
 	float viscosity;
 	float resitution;
+	float mass;
 	Kernel kernel;
 	Vector3f minPoint;
 	Vector3f maxPoint;
@@ -29,9 +30,9 @@ public:
 		for(int i = 0; i < particles.size(); i++){
 			p = particles[i];
 			vel = state[2*i+1];
-			
+
 			//	compute the sum of forces
-			Vector3f force = kernel.computeInternalForce(p);
+			Vector3f force = kernel.computeInternalForce(i);
 			force = force + Vector3f(0,-9.8,0);
 			
 			//	divide sum by mass-density

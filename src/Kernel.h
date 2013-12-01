@@ -19,6 +19,24 @@ public:
 	
 	};
 
+	float computeMassDensity(int index){
+		float rho = 0.0f;
+		float mass = this->ps->mass;
+		FluidParticle p = this->ps->particles[index];
+		for(int i = 0; i < this->ps->particles.size(); i++){
+			if(i != index){
+				mass * defaultWeight(p.location - this->ps->particles[i].location);
+			}
+		}
+	};
+
+	Vector3f computeInternalForces(int index){
+		FluidParticle particle = this->ps->particles[i];
+		for(int i = 0; i < this->ps->particles.size(); i++){
+			float rho = 
+		}
+	};
+
 	
 protected:
 	ParticleSystem* ps;
