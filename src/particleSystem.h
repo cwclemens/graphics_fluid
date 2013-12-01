@@ -19,6 +19,7 @@ public:
 	Kernel kernel;
 	Vector3f minPoint;
 	Vector3f maxPoint;
+	vector<FluidParticle> particles;
 	
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state){
@@ -48,23 +49,43 @@ public:
 		return F;
 	}
 
-	Vector3f handleCollision(FluidParticle particle, Vector3f velocity){
-		float x = particle.location[0];
-		if( !(minPoint[0] <= x && x < maxPoint[0]) ){
-			velocity[0] = 0.0f;
-		}
+	Vector3f handleCollisions(){
+		for(int i = 0; i < particles.size(); i++){
+			float& x = particles[i].position[0];
+			float& y = particles[i].position[1];
+			float& z = particles[i].position[2];
+			Vector3f velocity = m_vVecState[2*i+1];
 
-		float y = particle.location[1];
-		if( !(minPoint[1] <= y && y < maxPoint[1]) ){
-			velocity[1] = 0.0f;
-		}
+			if( x > maxPoint[0] ){
+				velocity[0] = 0.0f;
+				x = maxPoint[0]; 
+			}
+			
+			if( y > maxPoint[1] ){
+				velocity[1] = 0.0f;
+				y = maxPoint[1];
+			}
+			
+			if( z > maxPoint[2] ){
+				velocity[2] = 0.0f;
+				z = maxPoint[2];
+			}
 
-		float z = particle.location[2];
-		if( !(minPoint[2] <= z && z < maxPoint[2]) ){
-			velocity[2] = 0.0f;
-		}
+			if( minPoint[0] <= x){
+				velocity[0] = 0.0f;
+				x = minPoint[0]; 
+			}
 
-		return velocity;
+			if( minPoint[1] <= y ){
+				velocity[1] = 0.0f;
+				y = minPoint[2];
+			}
+
+			if( minPoint[2] <= z ){
+				velocity[2] = 0.0f;
+				z = minPoint[2];
+			}
+		}
 	};
 
 	// getter method for the system's state
@@ -78,7 +99,7 @@ public:
 protected:
 
 	vector<Vector3f> m_vVecState;
-	vector<FluidParticle> particles;
+	
 	
 };
 

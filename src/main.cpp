@@ -17,6 +17,7 @@
 #include "simpleSystem.h"
 #include "pendulumSystem.h"
 #include "ClothSystem.h"
+#include "SteadySystem.h"
 
 using namespace std;
 
@@ -33,28 +34,30 @@ namespace
   void initSystem(int argc, char * argv[])
   {
     // seed the random number generator with the current time
-    srand( time( NULL ) );
-    cout << argv[1] << endl;
-    std::vector<std::string> args;
-    std::transform(argv+1, argv+argc, std::back_inserter(args), [](char* arg){ return std::string(arg); });
-    if(args.at(1) == "S"){
-        system = new SimpleSystem();
-    }else if(argv[1] == "P"){
-        int num = atoi(argv[2]);
-        system = new PendulumSystem(num);
-    }else {
-        int num = atoi(argv[2]);
-        system = new ClothSystem(num);
-    }
+    // srand( time( NULL ) );
+    // cout << argv[1] << endl;
+    // std::vector<std::string> args;
+    // std::transform(argv+1, argv+argc, std::back_inserter(args), [](char* arg){ return std::string(arg); });
+    // if(args.at(1) == "S"){
+    //     system = new SimpleSystem();
+    // }else if(argv[1] == "P"){
+    //     int num = atoi(argv[2]);
+    //     system = new PendulumSystem(num);
+    // }else {
+    //     int num = atoi(argv[2]);
+    //     system = new ClothSystem(num);
+    // }
 
-    if(argv[3] == "E"){
-        timeStepper = new ForwardEuler();
-    }else if(argv[3] == "T"){
-        timeStepper = new Trapezoidal();
-    }else {
-        timeStepper = new RK4();
-    }
-    h = atof(argv[4]);
+    // if(argv[3] == "E"){
+    //     timeStepper = new ForwardEuler();
+    // }else if(argv[3] == "T"){
+    //     timeStepper = new Trapezoidal();
+    // }else {
+    //     timeStepper = new RK4();
+    // }
+    // h = atof(argv[4]);
+    system = new SteadySystem(32);
+    timeStepper = new RK4();
 
   }
 
@@ -66,7 +69,9 @@ namespace
       ///TODO The stepsize should change according to commandline arguments
     if(timeStepper!=0){
         cout << h << endl;
+      system->kernel.updateDensities();
       timeStepper->takeStep(system,h);
+      system->handleCollisions();
     }
   }
 
