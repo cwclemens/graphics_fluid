@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <vecmath.h>
-#include "extra.h"
 
 using namespace std;
 
@@ -25,10 +24,7 @@ public:
 	}
 
 	void draw(){
-		glPushMatrix();
-		glTranslatef(position[0], position[1], position[2]);
-		glutSolidSphere(0.075f,10.0f,10.0f);
-		glPopMatrix();
+		//TODO: Render a single particle
 	}
 
 	Vector3f position;
