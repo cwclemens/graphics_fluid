@@ -34,6 +34,16 @@ public:
 		ph9 = M_PI*h9;
 	};
 
+	void updateDensities(){
+		float k = this->ps->stiffness;
+		float rho_o = this->ps->restDensity;
+		for(int i = 0; i < this->ps->particles.size(); i++){
+			float rho = computeMassDensity(i);
+			this->ps->particles[i].pressure = rho;
+			this->ps->particles[i].pressure = k*(rho - rho_o);
+		}
+	};
+
 	vector<FluidParticle> computeNeighbors(int index){
 		FluidParticle p = this->ps->particles[index];
 		vector<FluidParticle> neighbors;
@@ -68,11 +78,11 @@ public:
 		float rho = p.density;
 		float mass = this->ps->mass;
 		for(int i = 0; i < computeNeighbors(index).size(); i++){
-				FluidParticle j = this->ps->particles[index];
-				float pj = j.pressure;
-				float rho_j = j.density;
-				pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
-					gradPressureWeight(p.location - j.location);
+			FluidParticle j = this->ps->particles[index];
+			float pj = j.pressure;
+			float rho_j = j.density;
+			pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
+				gradPressureWeight(p.location - j.location);
 		}
 		pressure = - rho * pressure;
 		return pressure;
