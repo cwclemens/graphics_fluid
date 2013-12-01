@@ -38,11 +38,44 @@ public:
 		return rho;
 	};
 
-	Vector3f computeInternalForces(int index){
-		FluidParticle particle = this->ps->particles[i];
+	Vector3f computeInternalPressure(int index){
+		Vector3f pressure;
+		FluidParticle p = this->ps->particles[index];
+		float pi = p.pressure;
+		float rho = p.density;
+		float mass = this->ps->mass;
 		for(int i = 0; i < this->ps->particles.size(); i++){
-			float rho = 
+			if(i != index){
+				FluidParticle j = this->ps->particles[index];
+				float pj = j.pressure;
+				float rho_j = j.density;
+				pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
+					gradPressureWeight(p.location - j.location);
+			}
 		}
+		pressure = - rho * pressure;
+		return pressure;
+	};
+
+	Vector3f computeViscosity(int index){
+		Vector3f viscosity;
+		FluidParticle p = this->ps->particles[index];
+		Vector3f ui = state[2*index + 1];
+		float mass = this->ps->mass;
+		float mu = this->ps->viscosity;
+		for(int i = 0; i < this->ps->particles.size(); i++){
+			if(i != index){
+				FluidParticle j = this->ps->particles[i];
+				viscosity = (j.velocity - p.velocity) * (mass / j.density) 
+				* laplaceViscosityWeight(p.location - j.location);
+			}
+		}
+		viscosity = mu * viscosity;
+		return viscosity;
+	};
+
+	Vector3f computeInternalForces(int index){
+		return computeInternalPressure(index) + computeViscosity(index);
 	};
 
 	

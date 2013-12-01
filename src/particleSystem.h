@@ -33,7 +33,7 @@ public:
 
 			//	compute the sum of forces
 			Vector3f force = kernel.computeInternalForce(i);
-			force = force + Vector3f(0,-9.8,0);
+			force = force + p.density * Vector3f(0,-9.8,0);
 			
 			//	divide sum by mass-density
 			rho = kernel.computeMassDensity(p);
@@ -41,7 +41,7 @@ public:
 		
 		
 			//	perform the collision check
-			vel = handleCollision(p, vel);
+			//vel = handleCollision(p, vel);
 			F.push_back(vel);
 			F.push_back(force);
 		}
