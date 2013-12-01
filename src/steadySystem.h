@@ -4,19 +4,20 @@
 #include "extra.h"
 #include <vector>
 
-#include "particleSystem.h"
+
 
 using namespace std;
 
-class SteadySystem: public ParticleSystem {
-	public:
+class SteadySystem: public ParticleSystem
+{
+public:
 	SteadySystem() {
 		minPoint = Vector3f(0);
 		maxPoint = Vector3f(.1);
 		viscosity = 3.5f;
 		restitution = 0;
 		mass = 0.015625f;
-		kernel = Kernel(this, 0.0375);
+		kernel = new Kernel(this, 0.0375);
 		m_numParticles = 32;
 		
 		for (int i=0; i<m_numParticles; i++) {
@@ -24,7 +25,7 @@ class SteadySystem: public ParticleSystem {
 		}
 	};
 
-	protected:
+protected:
 	float r = 0.0125f;
 	float d = 2*r;
 	 

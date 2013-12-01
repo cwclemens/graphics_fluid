@@ -56,7 +56,7 @@ namespace
     //     timeStepper = new RK4();
     // }
     // h = atof(argv[4]);
-    system = new SteadySystem(32);
+    system = new SteadySystem();
     timeStepper = new RK4();
 
   }
@@ -64,40 +64,40 @@ namespace
   // Take a step forward for the particle shower
   ///TODO: Optional. modify this function to display various particle systems
   ///and switch between different timeSteppers
-  void stepSystem()
-  {
+    void stepSystem()
+    {
       ///TODO The stepsize should change according to commandline arguments
-    if(timeStepper!=0){
-        cout << h << endl;
-      system->kernel.updateDensities();
-      timeStepper->takeStep(system,h);
-      system->handleCollisions();
+        if(timeStepper!=0){
+            cout << h << endl;
+          system->kernel->updateDensities();
+          timeStepper->takeStep(system,h);
+          system->handleCollisions();
+        }
     }
-  }
 
   // Draw the current particle positions
-  void drawSystem()
-  {
-    
-    // Base material colors (they don't change)
-    GLfloat particleColor[] = {0.4f, 0.7f, 1.0f, 1.0f};
-    GLfloat floorColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
-    
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, particleColor);
-    
-    //glutSolidSphere(0.1f,10.0f,10.0f);
-    
-    system->draw();
-    
-    
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, floorColor);
-    glPushMatrix();
-    glTranslatef(0.0f,-5.0f,0.0f);
-    glScaled(50.0f,0.01f,50.0f);
-    glutSolidCube(1);
-    glPopMatrix();
-    
-  }
+    void drawSystem()
+    {
+
+        // Base material colors (they don't change)
+        GLfloat particleColor[] = {0.4f, 0.7f, 1.0f, 1.0f};
+        GLfloat floorColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
+
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, particleColor);
+
+        //glutSolidSphere(0.1f,10.0f,10.0f);
+
+        system->draw();
+
+
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, floorColor);
+        glPushMatrix();
+        glTranslatef(0.0f,-5.0f,0.0f);
+        glScaled(50.0f,0.01f,50.0f);
+        glutSolidCube(1);
+        glPopMatrix();
+
+    }
         
 
     //-------------------------------------------------------------------
@@ -219,8 +219,8 @@ namespace
         glShadeModel(GL_SMOOTH);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+    	glEnable(GL_CULL_FACE);
+    	glCullFace(GL_BACK);
 
         // Clear to black
         glClearColor(0,0,0,1);

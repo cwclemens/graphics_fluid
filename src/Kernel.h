@@ -7,6 +7,8 @@
 
 #include "extra.h"
 
+#include "particleSystem.h"
+
 using namespace std;
 
 class Kernel {
@@ -18,6 +20,7 @@ public:
 		h3 = h2*h;
 		h6 = h3*h3;
 		h9 = h3*h6;
+		ph2 = M_PI*h2;
 		ph3 = M_PI*h3;
 		ph6 = M_PI*h6;
 		ph9 = M_PI*h9;
@@ -29,6 +32,7 @@ public:
 		h3 = h2*h;
 		h6 = h3*h3;
 		h9 = h3*h6;
+		ph2 = M_PI*h2;
 		ph3 = M_PI*h3;
 		ph6 = M_PI*h6;
 		ph9 = M_PI*h9;
@@ -50,7 +54,7 @@ public:
 		for(int i = 0; i < this->ps->particles.size(); i++){
 			if(i != index){
 				FluidParticle j = this->ps->particles[i];
-				if ((p.location - j.location).absSquared() < h2){
+				if ((p.position - j.position).absSquared() < h2){
 					neighbors.push_back(j);
 				}
 			}
@@ -65,7 +69,7 @@ public:
 		FluidParticle p = this->ps->particles[index];
 		for(int i = 0; i < computeNeighbors(index).size(); i++){
 			if(i != index){
-				rho += mass * defaultWeight(p.location - this->ps->particles[i].location);
+				rho += mass * defaultWeight(p.position - this->ps->particles[i].position);
 			}
 		}
 		return rho;
@@ -82,7 +86,7 @@ public:
 			float pj = j.pressure;
 			float rho_j = j.density;
 			pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
-				gradPressureWeight(p.location - j.location);
+				gradPressureWeight(p.position - j.position);
 		}
 		pressure = - rho * pressure;
 		return pressure;
@@ -97,7 +101,7 @@ public:
 		for(int i = 0; i < computeNeighbors(i).size(); i++){
 				FluidParticle j = this->ps->particles[i];
 				viscosity = (j.velocity - p.velocity) * (mass / j.density) 
-					* laplaceViscosityWeight(p.location - j.location);
+					* laplaceViscosityWeight(p.position - j.position);
 		}
 		viscosity = mu * viscosity;
 		return viscosity;
@@ -113,11 +117,11 @@ protected:
 
 	float gaussianWeight(Vector3f r, float h) {
 		float h2 = h*h;
-		return exp(-r.absSquared()/(2*h2))/pow(2*M_PI*h2, 1.5f);
+		return exp(-r.absSquared()/(2*h2))/pow(2*M_PI*h2, 1.5);
 	}
 
 	float gaussianWeight(Vector3f r) {
-		return exp(-r.absSquared()/(2*h2))/pow(2*ph2, 1.5f);
+		return exp(-r.absSquared()/(2*h2))/pow(2*ph2, 1.5);
 	}
 	
 	float defaultWeight(Vector3f r, float h) {
@@ -211,7 +215,7 @@ protected:
 		return 45*(h-r.abs())/ph6;
 	}
 
-	float h, h2, h3, h6, h9, ph3, ph6, ph9;
+	float h, h2, h3, h6, h9, ph2, ph3, ph6, ph9;
 };
 
 #endif

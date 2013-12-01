@@ -4,8 +4,11 @@
 #include <vector>
 #include <vecmath.h>
 
-using namespace std;
+#include "FluidParticle.h"
 
+
+using namespace std;
+class Kernel;
 class ParticleSystem
 {
 public:
@@ -14,9 +17,9 @@ public:
 
 	int m_numParticles;
 	float viscosity;
-	float resitution;
+	float restitution;
 	float mass;
-	Kernel kernel;
+	Kernel* kernel;
 	Vector3f minPoint;
 	Vector3f maxPoint;
 	vector<FluidParticle> particles;
@@ -33,11 +36,11 @@ public:
 			vel = state[2*i+1];
 
 			//	compute the sum of forces
-			Vector3f force = kernel.computeInternalForce(i);
+			Vector3f force = kernel->computeInternalForce(i);
 			force = force + p.density * Vector3f(0,-9.8,0);
 			
 			//	divide sum by mass-density
-			rho = kernel.computeMassDensity(p);
+			rho = kernel->computeMassDensity(p);
 			force = (1.0 / rho) * force;
 		
 		
