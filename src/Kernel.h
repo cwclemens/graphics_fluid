@@ -32,9 +32,10 @@ public:
 		FluidParticle p = this->ps->particles[index];
 		for(int i = 0; i < this->ps->particles.size(); i++){
 			if(i != index){
-				mass * defaultWeight(p.location - this->ps->particles[i].location);
+				rho += mass * defaultWeight(p.location - this->ps->particles[i].location);
 			}
 		}
+		return rho;
 	};
 
 	Vector3f computeInternalForces(int index){
