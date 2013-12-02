@@ -7,7 +7,7 @@
 
 #include "extra.h"
 
-#include "particleSystem.h"
+#include "ParticleSystem.h"
 
 using namespace std;
 

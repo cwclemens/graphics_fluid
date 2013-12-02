@@ -7,7 +7,7 @@
 
 #include "extra.h"
 
-#include "ParticleSystem.h"
+#include "FluidSystem.h"
 
 using namespace std;
 
