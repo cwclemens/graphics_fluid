@@ -74,17 +74,17 @@ public:
 				z = maxPoint[2];
 			}
 
-			if( minPoint[0] <= x){
+			if(x < minPoint[0]){
 				velocity[0] = 0.0f;
 				x = minPoint[0]; 
 			}
 
-			if( minPoint[1] <= y ){
+			if(y < minPoint[1]){
 				velocity[1] = 0.0f;
 				y = minPoint[2];
 			}
 
-			if( minPoint[2] <= z ){
+			if(z < minPoint[2]){
 				velocity[2] = 0.0f;
 				z = minPoint[2];
 			}
@@ -97,7 +97,11 @@ public:
 	// setter method for the system's state
 	void setState(const vector<Vector3f>  & newState) { m_vVecState = newState; };
 	
-	virtual void draw();
+	virtual void draw() {
+		for (int i; i<m_numParticles; i++) {
+			particles[i].draw();
+		}
+	}
 	
 protected:
 

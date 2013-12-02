@@ -17,7 +17,7 @@
 #include "simpleSystem.h"
 #include "pendulumSystem.h"
 #include "ClothSystem.h"
-#include "SteadySystem.h"
+#include "steadySystem.h"
 
 using namespace std;
 
