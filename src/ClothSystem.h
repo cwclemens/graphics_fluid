@@ -4,7 +4,7 @@
 #include "extra.h"
 #include <vector>
 
-#include "particleSystem.h"
+#include "ParticleSystem.h"
 
 class ClothSystem: public ParticleSystem
 {

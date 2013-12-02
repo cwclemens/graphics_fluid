@@ -68,14 +68,14 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/SimpleSystem.o \
 	$(OBJDIR)/main.o \
-	$(OBJDIR)/pendulumSystem.o \
 	$(OBJDIR)/TimeStepper.o \
+	$(OBJDIR)/PendulumSystem.o \
+	$(OBJDIR)/Kernel.o \
+	$(OBJDIR)/FluidSystem.o \
 	$(OBJDIR)/ClothSystem.o \
-	$(OBJDIR)/steadySystem.o \
-	$(OBJDIR)/particleSystem.o \
 	$(OBJDIR)/camera.o \
-	$(OBJDIR)/simpleSystem.o \
 
 RESOURCES := \
 
@@ -136,28 +136,28 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/main.o: src/main.cpp
+$(OBJDIR)/SimpleSystem.o: src/SimpleSystem.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/pendulumSystem.o: src/pendulumSystem.cpp
+$(OBJDIR)/main.o: src/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/TimeStepper.o: src/TimeStepper.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/PendulumSystem.o: src/PendulumSystem.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/Kernel.o: src/Kernel.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/FluidSystem.o: src/FluidSystem.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/ClothSystem.o: src/ClothSystem.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/steadySystem.o: src/steadySystem.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/particleSystem.o: src/particleSystem.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/camera.o: src/camera.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/simpleSystem.o: src/simpleSystem.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
