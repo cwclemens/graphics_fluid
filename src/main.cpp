@@ -14,51 +14,47 @@
 ///TODO: include more headers if necessary
 
 #include "TimeStepper.h"
-#include "simpleSystem.h"
-#include "pendulumSystem.h"
+#include "SimpleSystem.h"
+#include "PendulumSystem.h"
 #include "ClothSystem.h"
-#include "steadySystem.h"
+#include "SteadySystem.h"
 
 using namespace std;
 
 // Globals here.
+float g_stepSize = 0.04f;
+
 namespace
 {
 
     ParticleSystem *system;
     TimeStepper * timeStepper;
-    float h;
+    
 
   // initialize your particle systems
   ///TODO: read argv here. set timestepper , step size etc
   void initSystem(int argc, char * argv[])
   {
+    system = new PendulumSystem(3);
+
+    if (argc==3) {
+      if (*argv[1]=='e') {
+        timeStepper = new ForwardEuler();
+      } else if (*argv[1]=='t') {
+        timeStepper = new Trapzoidal();
+      } else if (*argv[1]=='r') {
+        timeStepper = new RK4();
+      } else {
+        cout << "Usage: " << argv[0] << " [{e t r} stepSize]" << endl;
+        exit(0);
+      }
+      g_stepSize = atof(argv[2]);
+    } else {
+      timeStepper = new RK4();
+    }
+
     // seed the random number generator with the current time
-    // srand( time( NULL ) );
-    // cout << argv[1] << endl;
-    // std::vector<std::string> args;
-    // std::transform(argv+1, argv+argc, std::back_inserter(args), [](char* arg){ return std::string(arg); });
-    // if(args.at(1) == "S"){
-    //     system = new SimpleSystem();
-    // }else if(argv[1] == "P"){
-    //     int num = atoi(argv[2]);
-    //     system = new PendulumSystem(num);
-    // }else {
-    //     int num = atoi(argv[2]);
-    //     system = new ClothSystem(num);
-    // }
-
-    // if(argv[3] == "E"){
-    //     timeStepper = new ForwardEuler();
-    // }else if(argv[3] == "T"){
-    //     timeStepper = new Trapezoidal();
-    // }else {
-    //     timeStepper = new RK4();
-    // }
-    // h = atof(argv[4]);
-    system = new SteadySystem();
-    timeStepper = new RK4();
-
+    srand( time( NULL ) );	
   }
 
   // Take a step forward for the particle shower
@@ -68,9 +64,8 @@ namespace
     {
       ///TODO The stepsize should change according to commandline arguments
         if(timeStepper!=0){
-            cout << h << endl;
           system->kernel->updateDensities();
-          timeStepper->takeStep(system,h);
+          timeStepper->takeStep(system, g_stepSize);
           system->handleCollisions();
         }
     }
