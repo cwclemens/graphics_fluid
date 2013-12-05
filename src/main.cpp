@@ -17,6 +17,7 @@
 #include "PendulumSystem.h"
 #include "ClothSystem.h"
 #include "SteadySystem.h"
+#include "DamSystem.h"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ namespace
   ///TODO: read argv here. set timestepper , step size etc
   void initSystem(int argc, char * argv[])
   {
-    system = new SteadySystem();
+    system = new DamSystem();
 
     if (argc==3) {
       if (*argv[1]=='e') {
