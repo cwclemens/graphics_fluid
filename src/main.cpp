@@ -91,7 +91,7 @@ namespace
         glPushMatrix();
         glTranslatef(0.0f,-5.0f,0.0f);
         glScaled(50.0f,0.01f,50.0f);
-        glutSolidCube(1);
+        //glutSolidCube(1);
         glPopMatrix();
 
     }
