@@ -4,6 +4,8 @@
 #include <cmath>
 #include "extra.h"
 #include "FluidParticle.h"
+#include "Kernel.h"
+#include "FluidSystem.h"
 
 
 using namespace std;

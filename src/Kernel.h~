@@ -12,8 +12,8 @@ using namespace std;
 
 class Kernel {
 public:
-	Kernel(ParticleSystem* fs);
-	Kernel(ParticleSystem* fs, float h);
+	Kernel(FluidSystem* fs);
+	Kernel(FluidSystem* fs, float h);
 	void updateDensities();
 	vector<FluidParticle> computeNeighbors(int index);
 	float computeMassDensity(int index);

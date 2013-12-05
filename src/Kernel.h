@@ -12,6 +12,7 @@ using namespace std;
 
 class Kernel {
 public:
+	Kernel() : h(1), h2(1), h3(1), h6(1), h9(1), ph2(1), ph3(1), ph6(1), ph9(1), fs(NULL) {}
 	Kernel(FluidSystem* fs);
 	Kernel(FluidSystem* fs, float h);
 	void updateDensities();

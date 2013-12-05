@@ -20,6 +20,8 @@ public:
 		mass = 0.015625f;
 		kernel = Kernel(this, 0.0375);
 		m_numParticles = 32;
+		stiffness = 3.0;
+		restDensity = 1000.0;
 
 		float r = 0.0125f;
 		float d = 2*r;

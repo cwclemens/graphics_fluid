@@ -1,5 +1,5 @@
 
-#include "pendulumSystem.h"
+#include "PendulumSystem.h"
 #include <iostream>
 using namespace std;
 

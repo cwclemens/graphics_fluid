@@ -19,6 +19,8 @@ public:
 	float viscosity;
 	float restitution;
 	float mass;
+	float stiffness;
+	float restDensity;
 	Kernel kernel;
 	Vector3f minPoint;
 	Vector3f maxPoint;
@@ -35,15 +37,7 @@ public:
 	void poststep();
 	
 protected:
-	FluidSystem() {
-		float viscosity = 1;
-		float restitution = 0;
-		float mass = 1;
-		Kernel kernel = Kernel(this);
-		Vector3f minPoint = Vector3f(0);
-		Vector3f maxPoint = Vector3f(1);
-	}
-	
+
 };
 
 #endif
