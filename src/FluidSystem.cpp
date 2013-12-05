@@ -30,8 +30,8 @@ vector<Vector3f> FluidSystem::evalF(vector<Vector3f> state){
 		//force.print();
 		//	perform the collision check
 		//vel = handleCollision(p, vel);
-		F.push_back(vel / 10.0f);
-		F.push_back(force / 10.0f);
+		F.push_back(vel / 5.0f);
+		F.push_back(force / 5.0f);
 	}
 	return F;
 }

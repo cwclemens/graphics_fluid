@@ -14,15 +14,15 @@ class SteadySystem: public FluidSystem
 public:
 	SteadySystem() {
 		minPoint = Vector3f(0);
-		maxPoint = Vector3f(4,4,1);
-		viscosity = 20.5f;
+		maxPoint = Vector3f(1,4,1);
+		viscosity = 41.0f;
 		restitution = 0.3;
 		// original 0.015625f
-		mass = 100.0f;
+		mass = 200.0f;
 		//original: 0.0375
-		kernel = Kernel(this, 0.1);
+		kernel = Kernel(this, 0.25);
 		m_numParticles = 400;
-		stiffness = 3.0;
+		stiffness = 1.5;
 		restDensity = 100.0;
 
 		float r = 0.0250f;
