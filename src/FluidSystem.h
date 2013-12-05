@@ -21,6 +21,8 @@ public:
 	float mass;
 	float stiffness;
 	float restDensity;
+	float threshold;
+	float surfaceTension;
 	Kernel kernel;
 	Vector3f minPoint;
 	Vector3f maxPoint;

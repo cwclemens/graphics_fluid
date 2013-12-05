@@ -16,6 +16,7 @@ public:
 		pressure = 0.0f;
 		position = _initialPosition;
 		velocity = _velocity;
+		normal = Vector3f();
 	};
 
 	void draw(){
@@ -27,6 +28,7 @@ public:
 
 	Vector3f position;
 	Vector3f velocity;
+	Vector3f normal;
 	float density;
 	float pressure;
 };

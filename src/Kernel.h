@@ -21,7 +21,8 @@ public:
 	Vector3f computeInternalPressure(int index);
 	Vector3f computeViscosity(int index);
 	Vector3f computeInternalForces(int index);
-
+	Vector3f computeSurfaceTensionForce(int index);
+	Vector3f computeNormal(int index);
 	
 protected:
 

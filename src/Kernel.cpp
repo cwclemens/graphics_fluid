@@ -129,6 +129,37 @@ Vector3f Kernel::computeInternalForces(int index){
 	//return Vector3f();
 }
 
+Vector3f Kernel::computeSurfaceTensionForce(int index){
+	Vector3f force;
+	FluidParticle p = this->fs->particles[index];
+	Vector3f normal = this->fs->particles[index].normal;
+	float mass = this->fs->mass;
+	vector<FluidParticle> neighbors = computeNeighbors(index);
+	neighbors.push_back(p);
+	float color;
+	for(int i = 0; i < neighbors.size(); i++){
+		FluidParticle j = neighbors[i];
+		color = color + (mass / j.density) * laplaceDefaultWeight(p.position - j.position);
+	}
+
+	normal = - this->fs->surfaceTension * normal.normalized() * color;
+	return normal;
+}
+
+Vector3f Kernel::computeNormal(int index){
+	Vector3f normal;
+	FluidParticle p = this->fs->particles[index];
+	float mass = this->fs->mass;
+	vector<FluidParticle> neighbors = computeNeighbors(index);
+	neighbors.push_back(p);
+	for(int i = 0; i < neighbors.size(); i++){
+		FluidParticle j = neighbors[i];
+		normal = normal + (mass / j.density) * gradDefaultWeight(p.position - j.position);
+	}
+	normal = - this->fs->surfaceTension;
+	return normal;
+}
+
 
 
 

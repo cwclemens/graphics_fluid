@@ -24,6 +24,9 @@ vector<Vector3f> FluidSystem::evalF(vector<Vector3f> state){
 		force.print();
 		//	divide sum by mass-density
 		rho = p.density;
+		if(p.normal.abs() >= threshold){
+			force = force + kernel.computeSurfaceTensionForce(i);
+		}
 		force = force / rho;
 
 		//cout << "force ";
@@ -105,6 +108,10 @@ void FluidSystem::draw() {
 
 void FluidSystem::prestep() {
 	kernel.updateDensities();
+	for(int i = 0; i < particles.size(); i++){
+		kernel.computeNormal(i).print();
+		particles[i].normal = kernel.computeNormal(i);
+	}
 }
 
 void FluidSystem::poststep() {
