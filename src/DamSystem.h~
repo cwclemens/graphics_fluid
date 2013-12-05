@@ -1,0 +1,48 @@
+#ifndef DAMSYSTEM_H
+#define DAMSYSTEM_H
+
+#include "extra.h"
+#include <vector>
+
+#include "FluidSystem.h"
+
+using namespace std;
+
+
+class DamSystem: public FluidSystem 
+{
+public:
+	DamSystem() {
+		minPoint = Vector3f(0);
+		maxPoint = Vector3f(2,2,2);
+		viscosity = 3.0f;
+		restitution = 0.2;
+		// original 0.015625f
+		mass = 700.0f;
+		//original: 0.0375
+		kernel = Kernel(this, 0.1);
+		m_numParticles = 500;
+		stiffness = 1.0;
+		threshold = 7.065;
+		surfaceTension = 0.1728;
+		restDensity = 100.0;
+
+		Vector3f diagonal = maxPoint - minPoint;
+		float vol = diagonal[0]*diagonal[1]*diagonal[2];
+		float r = 0.015f;
+		float d = 2*r;
+		
+		for (int i=0; i<m_numParticles; i++){
+			Vector3f position = Vector3f(r+(i%4)*d, r+(i/16)*d, r+((i/4)%4)*d);
+			m_vVecState.push_back(position);
+			m_vVecState.push_back(Vector3f(0));
+			particles.push_back(FluidParticle(position, Vector3f()));
+		}
+	}
+
+protected:
+	
+	 
+};
+
+#endif
