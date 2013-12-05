@@ -100,7 +100,27 @@ void FluidSystem::printSystem(){
 }
 
 void FluidSystem::draw() {
-	
+	glLineWidth(3);
+	glBegin(GL_LINES);
+	float deltax = maxPoint[0] - minPoint[0];
+	float deltay = maxPoint[1] - minPoint[1];
+	float deltaz = maxPoint[2] - minPoint[2];
+	glColor4f(1,1,1,1);
+	glVertex3f(minPoint[0], minPoint[1], minPoint[2]); glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2]);
+	glVertex3f(minPoint[0], minPoint[1], minPoint[2]); glVertex3f(minPoint[0], minPoint[1]+ deltay, minPoint[2]);
+	glVertex3f(minPoint[0], minPoint[1], minPoint[2]); glVertex3f(minPoint[0], minPoint[1], minPoint[2] + deltaz);
+	glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2]); glVertex3f(minPoint[0] + deltax, minPoint[1] +  deltay, minPoint[2]);
+	glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2]); glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2] + deltaz);
+	glVertex3f(minPoint[0], minPoint[1] + deltay, minPoint[2]); glVertex3f(minPoint[0], minPoint[1] + deltay, minPoint[2] + deltaz);
+	glVertex3f(minPoint[0], minPoint[1] + deltay, minPoint[2]); glVertex3f(minPoint[0] + deltax, minPoint[1] + deltay, minPoint[2]);
+	glVertex3f(minPoint[0], minPoint[1], minPoint[2] + deltaz); glVertex3f(minPoint[0], minPoint[1] + deltay, minPoint[2] + deltaz);
+	glVertex3f(minPoint[0], minPoint[1], minPoint[2] + deltaz); glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2] + deltaz);
+	glVertex3f(minPoint[0] + deltax, minPoint[1] + deltay, minPoint[2]); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
+	glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2] + deltaz); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
+	glVertex3f(minPoint[0], minPoint[1] + deltay, minPoint[2] + deltaz); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
+	//glVertex3f(minPoint[0], minPoint[1], minPoint[2]); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
+	glEnd();
+
 	for (int i = 0; i < m_numParticles; i++) {
 		particles[i].draw();
 	}
