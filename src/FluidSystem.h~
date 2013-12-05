@@ -1,5 +1,5 @@
-#ifndef PARTICLESYSTEM_H
-#define PARTICLESYSTEM_H
+#ifndef FLUIDSYSTEM_H
+#define FLUIDSYSTEM_H
 
 #include <vector>
 #include <vecmath.h>
@@ -16,12 +16,12 @@ class FluidSystem : public ParticleSystem
 {
 public:
 
-	float viscosity;
-	float restitution;
-	float mass;
-	Kernel kernel;
-	Vector3f minPoint;
-	Vector3f maxPoint;
+	float viscosity = 1;
+	float restitution = 0;
+	float mass = 1;
+	Kernel kernel = Kernel(this);
+	Vector3f minPoint = Vector3f(0);
+	Vector3f maxPoint = Vector3f(1);
 	vector<FluidParticle> particles;
 	
 	// for a given state, evaluate derivative f(X,t)
@@ -30,9 +30,12 @@ public:
 	Vector3f handleCollisions();
 	
 	virtual void draw();
+
+	void prestep();
+	void poststep();
 	
 protected:
-	
+	FluidSystem();
 	
 };
 

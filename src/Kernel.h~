@@ -4,6 +4,7 @@
 #include <vector>
 #include <vecmath.h>
 #include "extra.h"
+#include "FluidParticle.h"
 
 class FluidSystem;
 

@@ -1,5 +1,5 @@
-#ifndef PARTICLESYSTEM_H
-#define PARTICLESYSTEM_H
+#ifndef FLUIDSYSTEM_H
+#define FLUIDSYSTEM_H
 
 #include <vector>
 #include <vecmath.h>
@@ -23,8 +23,6 @@ public:
 	Vector3f minPoint;
 	Vector3f maxPoint;
 	vector<FluidParticle> particles;
-
-	virtual FluidSystem() = 0;
 	
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state);
@@ -32,9 +30,19 @@ public:
 	Vector3f handleCollisions();
 	
 	virtual void draw();
+
+	void prestep();
+	void poststep();
 	
 protected:
-	
+	FluidSystem() {
+		float viscosity = 1;
+		float restitution = 0;
+		float mass = 1;
+		Kernel kernel = Kernel(this);
+		Vector3f minPoint = Vector3f(0);
+		Vector3f maxPoint = Vector3f(1);
+	}
 	
 };
 

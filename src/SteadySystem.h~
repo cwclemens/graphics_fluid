@@ -9,7 +9,7 @@
 using namespace std;
 
 
-class SteadySystem: public FluidSystem
+class SteadySystem: public FluidSystem 
 {
 public:
 	SteadySystem() {
