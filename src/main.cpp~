@@ -35,7 +35,7 @@ namespace
   ///TODO: read argv here. set timestepper , step size etc
   void initSystem(int argc, char * argv[])
   {
-    system = new PendulumSystem(3);
+    system = new SteadySystem();
 
     if (argc==3) {
       if (*argv[1]=='e') {
@@ -64,7 +64,7 @@ namespace
     {
       ///TODO The stepsize should change according to commandline arguments
         if(timeStepper!=0){
-          system->kernel->updateDensities();
+          system->kernel.updateDensities();
           timeStepper->takeStep(system, g_stepSize);
           system->handleCollisions();
         }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <vecmath.h>
 
+#include "ParticleSystem.h"
 #include "FluidParticle.h"
 #include "Kernel.h"
 
@@ -18,7 +19,7 @@ public:
 	float viscosity;
 	float restitution;
 	float mass;
-	Kernel* kernel;
+	Kernel kernel;
 	Vector3f minPoint;
 	Vector3f maxPoint;
 	vector<FluidParticle> particles;

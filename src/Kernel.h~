@@ -11,8 +11,8 @@ using namespace std;
 
 class Kernel {
 public:
-	Kernel(ParticleSystem* ps);
-	Kernel(ParticleSystem* ps, float h);
+	Kernel(ParticleSystem* fs);
+	Kernel(ParticleSystem* fs, float h);
 	void updateDensities();
 	vector<FluidParticle> computeNeighbors(int index);
 	float computeMassDensity(int index);
@@ -51,7 +51,7 @@ protected:
 	float laplaceViscosityWeight(Vector3f r);
 
 	// Variables
-	FluidSystem* ps;
+	FluidSystem* fs;
 	float h, h2, h3, h6, h9, ph2, ph3, ph6, ph9;
 };
 

@@ -3,8 +3,8 @@
 #include <vecmath.h>
 #include <cmath>
 #include "extra.h"
+#include "FluidParticle.h"
 
-#include "FluidSystem.h"
 
 using namespace std;
 
@@ -23,7 +23,7 @@ Kernel::Kernel(FluidSystem* fs){
 	ph3 = M_PI*h3;
 	ph6 = M_PI*h6;
 	ph9 = M_PI*h9;
-};
+}
 
 Kernel::Kernel(FluidSystem* fs, float h) {
 	this->fs = fs;
@@ -36,7 +36,7 @@ Kernel::Kernel(FluidSystem* fs, float h) {
 	ph3 = M_PI*h3;
 	ph6 = M_PI*h6;
 	ph9 = M_PI*h9;
-};
+}
 
 void Kernel::updateDensities(){
 	float k = this->fs->stiffness;
@@ -46,7 +46,7 @@ void Kernel::updateDensities(){
 		this->fs->particles[i].pressure = rho;
 		this->fs->particles[i].pressure = k*(rho - rho_o);
 	}
-};
+}
 
 vector<FluidParticle> Kernel::computeNeighbors(int index){
 	FluidParticle p = this->fs->particles[index];
@@ -61,7 +61,7 @@ vector<FluidParticle> Kernel::computeNeighbors(int index){
 	}
 
 	return neighbors;
-};
+}
 
 float Kernel::computeMassDensity(int index){
 	float rho = 0.0f;
@@ -73,7 +73,7 @@ float Kernel::computeMassDensity(int index){
 		}
 	}
 	return rho;
-};
+}
 
 Vector3f Kernel::computeInternalPressure(int index){
 	Vector3f pressure;
@@ -90,7 +90,7 @@ Vector3f Kernel::computeInternalPressure(int index){
 	}
 	pressure = - rho * pressure;
 	return pressure;
-};
+}
 
 Vector3f Kernel::computeViscosity(int index){
 	Vector3f viscosity;
@@ -105,11 +105,11 @@ Vector3f Kernel::computeViscosity(int index){
 	}
 	viscosity = mu * viscosity;
 	return viscosity;
-};
+}
 
 Vector3f Kernel::computeInternalForces(int index){
 	return computeInternalPressure(index) + computeViscosity(index);
-};
+}
 
 
 

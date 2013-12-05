@@ -16,11 +16,11 @@ virtual vector<Vector3f> FluidSystem::evalF(vector<Vector3f> state){
 		vel = state[2*i+1];
 
 		//	compute the sum of forces
-		Vector3f force = kernel->computeInternalForce(i);
+		Vector3f force = kernel.computeInternalForce(i);
 		force = force + p.density * Vector3f(0,-9.8,0);
 		
 		//	divide sum by mass-density
-		rho = kernel->computeMassDensity(p);
+		rho = kernel.computeMassDensity(p);
 		force /= rho;
 	
 	
@@ -76,3 +76,4 @@ virtual void FluidSystem::draw() {
 		particles[i].draw();
 	}
 }
+

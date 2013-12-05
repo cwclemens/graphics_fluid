@@ -76,3 +76,12 @@ virtual void FluidSystem::draw() {
 		particles[i].draw();
 	}
 }
+
+void FluidSystem::prestep() {
+	kernel.updateDensities();
+}
+
+void FluidSystem::poststep() {
+	handleCollisions();
+}
+

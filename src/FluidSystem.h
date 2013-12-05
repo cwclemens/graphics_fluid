@@ -4,6 +4,7 @@
 #include <vector>
 #include <vecmath.h>
 
+#include "ParticleSystem.h"
 #include "FluidParticle.h"
 #include "Kernel.h"
 
@@ -22,6 +23,8 @@ public:
 	Vector3f minPoint;
 	Vector3f maxPoint;
 	vector<FluidParticle> particles;
+
+	virtual FluidSystem() = 0;
 	
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state);

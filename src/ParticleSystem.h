@@ -10,9 +10,9 @@ class ParticleSystem
 {
 public:
 
-	ParticleSystem(int nParticles=0) : m_numParticles(nParticles) {}
-
 	int m_numParticles;
+
+	ParticleSystem(int nParticles=0) { m_numParticles = nParticles; };	
 	
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state) = 0;
@@ -24,6 +24,9 @@ public:
 	void setState(const vector<Vector3f>  & newState) { m_vVecState = newState; };
 	
 	virtual void draw() = 0;
+
+	virtual void prestep();
+	virtual void poststep();
 	
 protected:
 

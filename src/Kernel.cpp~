@@ -3,8 +3,8 @@
 #include <vecmath.h>
 #include <cmath>
 #include "extra.h"
+#include "FluidParticle.h"
 
-#include "FluidSystem.h"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ vector<FluidParticle> Kernel::computeNeighbors(int index){
 	vector<FluidParticle> neighbors;
 	for(int i = 0; i < this->fs->particles.size(); i++){
 		if(i != index){
-			FluidParticle j = this->ps->particles[i];
+			FluidParticle j = this->fs->particles[i];
 			if ((p.position - j.position).absSquared() < h2){
 				neighbors.push_back(j);
 			}
@@ -82,7 +82,7 @@ Vector3f Kernel::computeInternalPressure(int index){
 	float rho = p.density;
 	float mass = this->fs->mass;
 	for(int i = 0; i < computeNeighbors(index).size(); i++){
-		FluidParticle j = this->ps->particles[index];
+		FluidParticle j = this->fs->particles[index];
 		float pj = j.pressure;
 		float rho_j = j.density;
 		pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
@@ -99,7 +99,7 @@ Vector3f Kernel::computeViscosity(int index){
 	float mass = this->fs->mass;
 	float mu = this->fs->viscosity;
 	for(int i = 0; i < computeNeighbors(i).size(); i++){
-			FluidParticle j = this->ps->particles[i];
+			FluidParticle j = this->fs->particles[i];
 			viscosity = (j.velocity - p.velocity) * (mass / j.density) 
 				* laplaceViscosityWeight(p.position - j.position);
 	}
