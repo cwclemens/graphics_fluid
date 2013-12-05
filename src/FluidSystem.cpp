@@ -118,7 +118,6 @@ void FluidSystem::draw() {
 	glVertex3f(minPoint[0] + deltax, minPoint[1] + deltay, minPoint[2]); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
 	glVertex3f(minPoint[0] + deltax, minPoint[1], minPoint[2] + deltaz); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
 	glVertex3f(minPoint[0], minPoint[1] + deltay, minPoint[2] + deltaz); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
-	//glVertex3f(minPoint[0], minPoint[1], minPoint[2]); glVertex3f(maxPoint[0], maxPoint[1], maxPoint[2]);
 	glEnd();
 
 	for (int i = 0; i < m_numParticles; i++) {
