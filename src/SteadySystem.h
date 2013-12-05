@@ -26,8 +26,12 @@ public:
 		float r = 0.0125f;
 		float d = 2*r;
 		
-		for (int i=0; i<m_numParticles; i++) {
-			particles.push_back(FluidParticle(Vector3f(r+(i%4)*d, r+((i/4)%4)*d, r+(i/16)*d), Vector3f(0)));
+		for (int i=0; i<m_numParticles; i++){
+			Vector3f position = Vector3f(r+(i%4)*d, r+((i/4)%4)*d, r+(i/16)*d);
+
+			m_vVecState.push_back(position);
+			m_vVecState.push_back(Vector3f(0));
+			particles.push_back(m_vVecState[2*i]);
 		}
 	}
 

@@ -9,7 +9,7 @@ using namespace std;
 class ParticleSystem
 {
 public:
-
+	vector<Vector3f> m_vVecState;
 	int m_numParticles;
 
 	ParticleSystem(int nParticles=0) { m_numParticles = nParticles; };	
@@ -25,12 +25,11 @@ public:
 	
 	virtual void draw() = 0;
 
-	virtual void prestep();
-	virtual void poststep();
+	virtual void prestep() {};
+	virtual void poststep() {};
 	
-protected:
 
-	vector<Vector3f> m_vVecState;
+	
 	
 };
 

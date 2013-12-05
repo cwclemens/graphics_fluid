@@ -10,9 +10,9 @@ class ParticleSystem
 {
 public:
 
-	ParticleSystem(int numParticles=0);
-
 	int m_numParticles;
+
+	ParticleSystem(int nParticles=0) { m_numParticles = nParticles; };	
 	
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state) = 0;

@@ -10,19 +10,17 @@ using namespace std;
 class FluidParticle 
 {
 public:
-	FluidParticle(Vector3f pos, Vector3f vel){
-		position = pos;
-		velocity = vel;
+	// FluidParticle(){
+	// 	density = 0.0f;
+	// 	pressure = 0.0f;
+	// 	position = Vector3f();
+	// }
+
+	FluidParticle(Vector3f _initialPosition){
 		density = 0.0f;
 		pressure = 0.0f;
+		//position = _initialPosition;
 	};
-
-	FluidParticle(){
-		position = Vector3f();
-		velocity = Vector3f();
-		density = 1.0f;
-		pressure = 1.0f;
-	}
 
 	void draw(){
 		glPushMatrix();
@@ -32,7 +30,6 @@ public:
 	}
 
 	Vector3f position;
-	Vector3f velocity;
 	float density;
 	float pressure;
 };

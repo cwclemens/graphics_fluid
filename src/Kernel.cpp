@@ -97,12 +97,14 @@ Vector3f Kernel::computeInternalPressure(int index){
 Vector3f Kernel::computeViscosity(int index){
 	Vector3f viscosity;
 	FluidParticle p = this->fs->particles[index];
-	Vector3f ui = state[2*index + 1];
+	Vector3f ui = this->fs->m_vVecState[2*index + 1];
 	float mass = this->fs->mass;
 	float mu = this->fs->viscosity;
 	for(int i = 0; i < computeNeighbors(i).size(); i++){
 			FluidParticle j = this->fs->particles[i];
-			viscosity = (j.velocity - p.velocity) * (mass / j.density) 
+			Vector3f p_velocity = this->fs->m_vVecState[2*i + 1];
+			Vector3f j_velocity = this->fs->m_vVecState[2*i + 3];
+			viscosity = (j_velocity - p_velocity) * (mass / j.density) 
 				* laplaceViscosityWeight(p.position - j.position);
 	}
 	viscosity = mu * viscosity;
@@ -127,7 +129,7 @@ float Kernel::gaussianWeight(Vector3f r, float h) {
 }
 
 float Kernel::gaussianWeight(Vector3f r) {
-	return exp(-r.absSquared()/(2*h2))/pow(2*ph2, 1.5);
+	return exp(-r.absSquared()/(2*h2))/ pow(2*ph2, 1.5f);
 }
 
 float Kernel::defaultWeight(Vector3f r, float h) {

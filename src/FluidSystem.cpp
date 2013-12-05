@@ -2,26 +2,27 @@
 #include <vector>
 #include <vecmath.h>
 #include "FluidParticle.h"
+#include "FluidSystem.h"
 
 using namespace std;
 
-virtual vector<Vector3f> FluidSystem::evalF(vector<Vector3f> state){
+vector<Vector3f> FluidSystem::evalF(vector<Vector3f> state){
 	//for each particle
 	Vector3f vel;
-	FluidParticle p;
+	
 	float rho;
 	vector<Vector3f> F;
 	for(int i = 0; i < particles.size(); i++){
-		p = particles[i];
+		FluidParticle p = particles[i];
 		vel = state[2*i+1];
 
 		//	compute the sum of forces
-		Vector3f force = kernel.computeInternalForce(i);
+		Vector3f force = kernel.computeInternalForces(i);
 		force = force + p.density * Vector3f(0,-9.8,0);
 		
 		//	divide sum by mass-density
-		rho = kernel.computeMassDensity(p);
-		force /= rho;
+		rho = kernel.computeMassDensity(i);
+		force = force * (1.0 / rho);
 	
 	
 		//	perform the collision check
@@ -32,7 +33,7 @@ virtual vector<Vector3f> FluidSystem::evalF(vector<Vector3f> state){
 	return F;
 }
 
-Vector3f FluidSystem::handleCollisions(){
+void FluidSystem::handleCollisions(){
 	for(int i = 0; i < particles.size(); i++){
 		float& x = particles[i].position[0];
 		float& y = particles[i].position[1];
@@ -71,7 +72,7 @@ Vector3f FluidSystem::handleCollisions(){
 	}
 }
 
-virtual void FluidSystem::draw() {
+void FluidSystem::draw() {
 	for (int i; i<m_numParticles; i++) {
 		particles[i].draw();
 	}
@@ -83,5 +84,12 @@ void FluidSystem::prestep() {
 
 void FluidSystem::poststep() {
 	handleCollisions();
+	updatePositions();
+}
+
+void FluidSystem::updatePositions(){
+	for(int i = 0; i < m_numParticles; i++){
+		particles[i].position = m_vVecState[2*i];
+	}
 }
 

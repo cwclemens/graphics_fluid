@@ -29,12 +29,13 @@ public:
 	// for a given state, evaluate derivative f(X,t)
 	virtual vector<Vector3f> evalF(vector<Vector3f> state);
 
-	Vector3f handleCollisions();
+	void handleCollisions();
 	
 	virtual void draw();
 
 	void prestep();
 	void poststep();
+	void updatePositions();
 	
 protected:
 
