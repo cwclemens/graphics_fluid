@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <iterator>
 
-
 #include "extra.h"
 #include "camera.h"
 
@@ -29,6 +28,7 @@ namespace
 
     ParticleSystem *system;
     TimeStepper * timeStepper;
+    string temp;
     
 
   // initialize your particle systems
@@ -67,6 +67,7 @@ namespace
           system->prestep();
           timeStepper->takeStep(system, g_stepSize);
           system->poststep();
+          //temp = cin.get();
         }
     }
 
@@ -335,7 +336,7 @@ int main( int argc, char* argv[] )
     glutDisplayFunc( drawScene );
 
     // Trigger timerFunc every 20 msec
-    glutTimerFunc(20, timerFunc, 20);
+    glutTimerFunc(10, timerFunc, 10);
 
         
     // Start the main loop.  glutMainLoop never returns.

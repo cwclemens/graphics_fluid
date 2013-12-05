@@ -35,7 +35,8 @@ public:
 
 	void prestep();
 	void poststep();
-	void updatePositions();
+	void printSystem();
+	void updateParticles();
 	
 protected:
 

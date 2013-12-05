@@ -4,22 +4,18 @@
 #include <vector>
 #include <vecmath.h>
 #include "extra.h"
+#include <iostream>
 
 using namespace std;
 
 class FluidParticle 
 {
 public:
-	// FluidParticle(){
-	// 	density = 0.0f;
-	// 	pressure = 0.0f;
-	// 	position = Vector3f();
-	// }
-
-	FluidParticle(Vector3f _initialPosition){
+	FluidParticle(Vector3f _initialPosition, Vector3f _velocity){
 		density = 0.0f;
 		pressure = 0.0f;
-		//position = _initialPosition;
+		position = _initialPosition;
+		velocity = _velocity;
 	};
 
 	void draw(){
@@ -30,6 +26,7 @@ public:
 	}
 
 	Vector3f position;
+	Vector3f velocity;
 	float density;
 	float pressure;
 };

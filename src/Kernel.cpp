@@ -45,7 +45,7 @@ void Kernel::updateDensities(){
 	float rho_o = this->fs->restDensity;
 	for(int i = 0; i < this->fs->particles.size(); i++){
 		float rho = computeMassDensity(i);
-		this->fs->particles[i].pressure = rho;
+		this->fs->particles[i].density = rho;
 		this->fs->particles[i].pressure = k*(rho - rho_o);
 	}
 }
@@ -69,11 +69,13 @@ float Kernel::computeMassDensity(int index){
 	float rho = 0.0f;
 	float mass = this->fs->mass;
 	FluidParticle p = this->fs->particles[index];
-	for(int i = 0; i < computeNeighbors(index).size(); i++){
-		if(i != index){
-			rho += mass * defaultWeight(p.position - this->fs->particles[i].position);
-		}
+	vector<FluidParticle> neighbors = computeNeighbors(index);
+	neighbors.push_back(p);
+
+	for(int i = 0; i < neighbors.size(); i++){
+		rho = rho + mass * defaultWeight(p.position - neighbors[i].position);
 	}
+
 	return rho;
 }
 
@@ -83,8 +85,10 @@ Vector3f Kernel::computeInternalPressure(int index){
 	float pi = p.pressure;
 	float rho = p.density;
 	float mass = this->fs->mass;
-	for(int i = 0; i < computeNeighbors(index).size(); i++){
-		FluidParticle j = this->fs->particles[index];
+	//cout << "pi.pressure " << pi << " rho_i " << rho << endl;
+	vector<FluidParticle> neighbors = computeNeighbors(index);
+	for(int i = 0; i < neighbors.size(); i++){
+		FluidParticle j = neighbors[i];
 		float pj = j.pressure;
 		float rho_j = j.density;
 		pressure += ((pi / pow(rho, 2)) + (pj / pow(rho_j, 2))) * mass * 
@@ -100,19 +104,29 @@ Vector3f Kernel::computeViscosity(int index){
 	Vector3f ui = this->fs->m_vVecState[2*index + 1];
 	float mass = this->fs->mass;
 	float mu = this->fs->viscosity;
-	for(int i = 0; i < computeNeighbors(i).size(); i++){
-			FluidParticle j = this->fs->particles[i];
-			Vector3f p_velocity = this->fs->m_vVecState[2*i + 1];
-			Vector3f j_velocity = this->fs->m_vVecState[2*i + 3];
+	Vector3f p_velocity = this->fs->particles[index].velocity;
+	vector<FluidParticle> neighbors = computeNeighbors(index);
+
+	for(int i = 0; i < neighbors.size(); i++){
+			FluidParticle j = neighbors[i];
+			Vector3f j_velocity = j.velocity;
 			viscosity = (j_velocity - p_velocity) * (mass / j.density) 
 				* laplaceViscosityWeight(p.position - j.position);
 	}
 	viscosity = mu * viscosity;
+
 	return viscosity;
 }
 
 Vector3f Kernel::computeInternalForces(int index){
-	return computeInternalPressure(index) + computeViscosity(index);
+	Vector3f pressure = computeInternalPressure(index);
+	Vector3f viscosity = computeViscosity(index);
+	// cout << "pressure " << endl;
+	// pressure.print();
+	// cout << "viscosity " << endl;
+	// viscosity.print();
+	return pressure + viscosity;
+	//return Vector3f();
 }
 
 
@@ -140,7 +154,11 @@ float Kernel::defaultWeight(Vector3f r, float h) {
 
 float Kernel::defaultWeight(Vector3f r) {
 	float rmag = r.abs();
-	if (rmag > h) return 0;
+	if (rmag > h){
+		r.print();
+		cout << "rmag was greater than h" << endl;
+		return 0;
+	}
 	return 315*pow(h2 - rmag*rmag, 3)/(64*ph9);
 }
 
